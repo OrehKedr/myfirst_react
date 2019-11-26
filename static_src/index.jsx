@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const element = <h1 className="element">It seems we connected React</h1>
+const text = 'It seems we connected React';
+
+const Element = (props) => {
+    return <h1 className="element">{ props.content }</h1>;
+}
 
 ReactDOM.render(
-    element,
+    <Element content = { text }/>,
     document.getElementById('root'),
 );
