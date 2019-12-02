@@ -10,6 +10,13 @@ module.exports = {
         path: path.resolve(__dirname, "static", "build"),
         filename: 'app.js',
     },
+
+    // Включить отслеживание изменений в файлах проекта. 
+    // Автоматически пересобирать при сохранении изменений.
+    // Работает после первого запуска скрипта "build" с опцией
+    // --mode development и скрипта "server".
+    watch: process.argv[process.argv.length - 1] === 'development',
+
     module: {
         rules: [
             {
