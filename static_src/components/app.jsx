@@ -6,6 +6,8 @@ export default class App extends React.Component {
     };
 
     render() {
+        setTimeout( () => this.setState( {'text': 'Обновлённый React-компонент'} ), 1000);
+
         return (
             <h1>{this.state.text}</h1>
         );
