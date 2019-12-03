@@ -1,6 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Child extends React.Component {
+    static propTypes = {
+        counter: PropTypes.number,
+    };
+
+    static defaultProps = {
+        counter: 1,
+    };
+
     render() {
         console.log('Child render');
 

@@ -15,11 +15,11 @@ export default class App extends React.Component {
         console.log('render');
 
         return (
-            <div>
+            <React.Fragment>
                 <h1>{this.state.text}</h1>
                 <Child counter = {this.state.counter} />
                 <button onClick = {this.handleClick}>+1</button>
-            </div>
+            </React.Fragment>
         );
     }
 
