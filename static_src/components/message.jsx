@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 
 export default class Message extends React.Component {
     static propTypes = {
-        author: PropTypes.string.isRequired,
+        sender: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
     };
 
     render() {
         return (
-            <React.Fragment>
-                <span><b>{ this.props.author } написал(a):</b></span>
+            <div className = 'message'
+                style = { { alignSelf: this.props.sender === 'bot' ? 'flex-start' : 'flex-end'} }
+            >
+                <span><b>{ this.props.sender } написал(a):</b></span>
                 <div>{ this.props.text }</div>
-            </React.Fragment>            
+            </div>            
         );
     }
 }
