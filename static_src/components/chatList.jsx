@@ -9,8 +9,8 @@ export default class ChatList extends React.Component {
 
     render() {
         return (
-            <List>
-                <Subheader>Recent chats</Subheader>
+            <List className='chatlist'>
+                <Subheader>Выберите канал: </Subheader>
                 <ListItem
                     primaryText="Brendan Lim"
                     leftAvatar={<Avatar src={this.avatarImg} />}
