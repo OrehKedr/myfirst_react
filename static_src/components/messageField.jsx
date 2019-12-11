@@ -1,4 +1,6 @@
 import React from 'react';
+import { TextField, FloatingActionButton } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 import Message from './message';
 import '../styles/styles.css';
 
@@ -23,14 +25,21 @@ export default class MessageField extends React.Component {
             <div className = "layout">
                 <div id = 'main' className = 'message-field'>
                     { messageElements }
-                    <input 
-                        name = 'input' 
-                        ref = { this.textInput } 
-                        value = { this.state.input } 
-                        onChange = { this.handleChange } 
-                        onKeyUp = { (event) => this.handleKeyUp(event, this.state.input) } 
+                </div>
+                <div style={ { width: '100%', display: 'flex' } }>
+                    <TextField
+                        ref={ this.textInput }
+                        name="input"
+                        fullWidth={ true }
+                        hintText="Введите сообщение"
+                        style={ { fontSize: '22px' } }
+                        onChange={ this.handleChange }
+                        value={ this.state.input }
+                        onKeyUp={ (event) => this.handleKeyUp(event, this.state.input) }
                     />
-                    <button onClick = { () => this.handleClick(this.state.input) }>Отправить сообщение</button>
+                    <FloatingActionButton onClick={ () => this.handleClick(this.state.input) }>
+                        <SendIcon />
+                    </FloatingActionButton>
                 </div>
             </div>
         );
