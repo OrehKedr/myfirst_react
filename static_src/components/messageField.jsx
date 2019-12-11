@@ -11,6 +11,9 @@ export default class MessageField extends React.Component {
         input: '',
     };
 
+    // Создадим ref в поле `textInput` для хранения DOM-элемента
+    textInput = React.createRef();
+
     render() {
         const messageElements = this.state.messages.map( (msg, index) => (
             <Message key = { index } sender = { msg.sender } text = { msg.text } />
@@ -22,6 +25,7 @@ export default class MessageField extends React.Component {
                     { messageElements }
                     <input 
                         name = 'input' 
+                        ref = { this.textInput } 
                         value = { this.state.input } 
                         onChange = { this.handleChange } 
                         onKeyUp = { (event) => this.handleKeyUp(event, this.state.input) } 
@@ -41,7 +45,7 @@ export default class MessageField extends React.Component {
     };
 
     handleKeyUp = (event, message) => {
-        if (event.keyCode === 13) { //Enter
+        if (event.keyCode === 13) { // Enter
             this.sendMessage(message);
         }
     };
@@ -50,6 +54,11 @@ export default class MessageField extends React.Component {
         this.setState({ messages: [...this.state.messages, { sender: 'me', text: message }],
                         input: ''});
     }
+
+    // Ставим фокус на <input> при монтировании компонента
+    componentDidMount() {
+        this.textInput.current.focus();
+    };
 
     componentDidUpdate() {
         if (this.state.messages.length % 2 === 1) {
