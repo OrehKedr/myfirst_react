@@ -22,11 +22,11 @@ export default class MessageField extends React.Component {
         ) );
 
         return (
-            <div className = "layout">
+            <div className = "message-field-layout">
                 <div id = 'main' className = 'message-field'>
                     { messageElements }
                 </div>
-                <div style={ { width: '100%', display: 'flex' } }>
+                <div style={ { width: '100%', display: 'flex', padding: '10px 20px' } }>
                     <TextField
                         ref={ this.textInput }
                         name="input"
@@ -41,6 +41,7 @@ export default class MessageField extends React.Component {
                         <SendIcon />
                     </FloatingActionButton>
                 </div>
+
             </div>
         );
     }
