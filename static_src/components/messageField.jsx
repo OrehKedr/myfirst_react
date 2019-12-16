@@ -2,7 +2,6 @@ import React from 'react';
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
 import Message from './message';
-import '../styles/styles.css';
 
 export default class MessageField extends React.Component {
     state = {
@@ -37,7 +36,7 @@ export default class MessageField extends React.Component {
                         value={ this.state.input }
                         onKeyUp={ (event) => this.handleKeyUp(event, this.state.input) }
                     />
-                    <FloatingActionButton onClick={ () => this.handleClick(this.state.input) }>
+                    <FloatingActionButton onClick={ () => this.sendMessage(this.state.input) }>
                         <SendIcon />
                     </FloatingActionButton>
                 </div>
@@ -48,10 +47,6 @@ export default class MessageField extends React.Component {
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-    };
-
-    handleClick = (message) => {
-        this.sendMessage(message);
     };
 
     handleKeyUp = (event, message) => {
@@ -70,10 +65,13 @@ export default class MessageField extends React.Component {
         this.textInput.current.focus();
     };
 
-    componentDidUpdate() {
-        if (this.state.messages.length % 2 === 1) {
+    componentDidUpdate(prevProps, prevState) {
+        const { messages } = this.state;
+
+        if (prevState.messages.length < messages.length &&
+            messages[messages.length - 1].sender === 'me') {
             setTimeout( 
-                () => this.setState({ messages: [...this.state.messages, { sender: 'bot', text: 'Не приставай ко мне, я робот!' }] }),
+                () => this.setState({ messages: [...messages, { sender: 'bot', text: 'Не приставай ко мне, я робот!' }] }),
                 1000 
             );
         }
