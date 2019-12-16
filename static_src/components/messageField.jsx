@@ -66,6 +66,9 @@ export default class MessageField extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
+        // Параметр prevProps не используется, но 
+        // его указание на первой позиции в списке параметров необходимо
+        // для правильной инициализации параметра prevState
         const { messages } = this.state;
 
         if (prevState.messages.length < messages.length &&
