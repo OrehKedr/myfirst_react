@@ -46,4 +46,13 @@ module.exports = {
         modules: [`${__dirname}/static_src`, 'node_modules'],
         extensions: ['.js', '.jsx'],
     },
+    // Настройка webpack dev server: ответ сервера на запросы по незнакомым URL
+    devServer: {
+        port: 8080,
+        historyApiFallback: {
+            index: 'index.html'
+        }
+    },
+    // Настройка для отладки приложения с помощью source-map
+    devtool: 'cheap-inline-module-source-map',
 };

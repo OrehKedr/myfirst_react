@@ -1,17 +1,26 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import PropTypes from "prop-types";
 import MessageField from './messageField';
 import Header from './header';
 import Chatlist from './chatList';
+import '../styles/styles.css';
 
 export default class Layout extends React.Component {
+    static propTypes = {
+        chatId: PropTypes.number,
+    };
+
+    static defaultProps = {
+        chatId: 1,
+    };
+
     render() {
         return (
-            <MuiThemeProvider>
-                <Header />
+            <>
+                <Header chatId={ this.props.chatId }/>
                 <Chatlist />
-                <MessageField />
-            </MuiThemeProvider>
+                <MessageField chatId={ this.props.chatId }/>
+            </>
         );
     }
 }
