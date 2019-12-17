@@ -14,7 +14,7 @@ export default class Message extends React.Component {
             >
                 <span><b>{ this.props.sender } написал(a):</b></span>
                 <div>{ this.props.text }</div>
-            </div>            
+            </div>
         );
     }
 }
