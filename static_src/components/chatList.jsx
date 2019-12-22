@@ -1,37 +1,67 @@
 import React from 'react';
-import Avatar from 'material-ui/Avatar';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { List, ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
-const avatarImg = '../images/kerem-128.jpg';
+import { TextField } from 'material-ui';
+import AddIcon from 'material-ui/svg-icons/content/add';
+import ContentSend from 'material-ui/svg-icons/content/send';
+import PropTypes from "prop-types";
 
 export default class ChatList extends React.Component {
+    static propTypes = {
+        chats: PropTypes.object.isRequired,
+        addChat: PropTypes.func.isRequired,
+    };
+
+    state = {
+        input: '',
+    };
+
+    handleChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleKeyUp = (event) => {
+        if (event.keyCode === 13) { //Enter
+            this.addChat();
+        }
+    };
+
+    addChat = () => {
+        if (this.state.input.length > 0) {
+            this.props.addChat(this.state.input);
+            this.setState({ input: ''});
+        }
+    };
+
     render() {
+        const { chats } = this.props;
+        const chatElements = Object.keys(chats).map( chatId => (
+            <Link key={ chatId } to={ `/chat/${chatId}` }>
+                <ListItem
+                    primaryText={ chats[chatId].title }
+                    leftIcon={ <ContentSend /> }
+                />
+            </Link>
+        ));
+
         return (
-            <List className='chatlist'>
-                <Subheader>Выберите канал: </Subheader>
-                <Link to="/chat/1/">
-                    <ListItem
-                        primaryText="Brendan Lim"
-                        leftAvatar={<Avatar src={avatarImg} />}
-                        rightIcon={<CommunicationChatBubble />}
-                    />
-                </Link>
-                <Link to="/chat/2/">
-                    <ListItem
-                        primaryText="Brendan Lim"
-                        leftAvatar={<Avatar src={avatarImg} />}
-                        rightIcon={<CommunicationChatBubble />}
-                    />
-                </Link>
-                <Link to="/chat/3/">
-                    <ListItem
-                        primaryText="Brendan Lim"
-                        leftAvatar={<Avatar src={avatarImg} />}
-                        rightIcon={<CommunicationChatBubble />}
-                    />
-                </Link>
+            <List>
+                { chatElements }
+                <ListItem 
+                    key="Add new chat"
+                    leftIcon={ <AddIcon />}
+                    onClick={ this.AddChat }
+                    style={ { height: '60px' } }
+                    children= {<TextField
+                        key="textField"
+                        fullWidth
+                        name="input"
+                        hintText="Добавить новый чат"
+                        onChange={ this.handleChange }
+                        value={ this.state.input }
+                        onKeyUp={ this.handleKeyUp }
+                    />} 
+                />
             </List>
         );
     }
