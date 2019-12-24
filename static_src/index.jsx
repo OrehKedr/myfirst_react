@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import initStore from './utils/store';
 
 ReactDOM.render(
-    <Provider store= { initStore() }>
+    <Provider store={ initStore() }>
         <BrowserRouter>
             <MuiThemeProvider>
                 <Router />

@@ -10,45 +10,12 @@ import '../styles/styles.css';
 
 class Layout extends React.Component {
     static propTypes = {
+        // chatId пробрасывается из Router
         chatId: PropTypes.number,
-        sendMessage: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
         chatId: 1,
-    };
-
-    state = {
-        messages: {
-            1: { text: 'Привет!', sender: 'bot' },
-            2: { text: 'Здравствуйте! ', sender: 'bot' },
-        },
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        const { messages } = this.state;
-
-        if (Object.keys(prevState.messages).length < Object.keys(messages).length &&
-            Object.values(messages)[Object.values(messages).length - 1].sender === 'me') {
-            setTimeout( 
-                () => this.sendMessage('Не приставай ко мне, я робот!', 'bot'),
-                1000 
-            );
-        }
-    };
-
-    sendMessage = (message, sender) => {
-        const { messages } = this.state;
-        const { chatId } = this.props;
-        const messageId = Object.keys(messages).length + 1;
-
-        this.setState({
-            messages: { ...messages, 
-                        [messageId]: { text: message, sender: sender } 
-            },
-        });
-        // Вызываем Action-метод Redux
-        this.props.sendMessage(messageId, message, sender, chatId);
     };
 
     render() {
@@ -58,8 +25,6 @@ class Layout extends React.Component {
                 <Chatlist />
                 <MessageField 
                     chatId={ this.props.chatId }
-                    messages={ this.state.messages }
-                    sendMessage={ this.sendMessage }
                 />
             </>
         );
@@ -68,6 +33,6 @@ class Layout extends React.Component {
 
 const mapStateToProps  = ({}) => ({});
 
-const mapDispatchToProps  = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapDispatchToProps  = dispatch => bindActionCreators({}, dispatch);
 
 export default connect(mapStateToProps , mapDispatchToProps)(Layout);
