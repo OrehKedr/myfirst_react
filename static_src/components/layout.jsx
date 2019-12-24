@@ -3,11 +3,15 @@ import PropTypes from "prop-types";
 import MessageField from './messageField';
 import Header from './header';
 import Chatlist from './chatList';
+import {bindActionCreators} from "redux";
+import connect from "react-redux/es/connect/connect";
+import { sendMessage } from "../actions/messageActions";
 import '../styles/styles.css';
 
-export default class Layout extends React.Component {
+class Layout extends React.Component {
     static propTypes = {
         chatId: PropTypes.number,
+        sendMessage: PropTypes.func.isRequired,
     };
 
     static defaultProps = {
@@ -15,15 +19,9 @@ export default class Layout extends React.Component {
     };
 
     state = {
-        chats: {
-            1: { title: 'Чат 1', messageList: [1] },
-            2: { title: 'Чат 2', messageList: [2, 3] },
-            3: { title: 'Чат 3', messageList: [] },
-        },
         messages: {
             1: { text: 'Привет!', sender: 'bot' },
             2: { text: 'Здравствуйте! ', sender: 'bot' },
-            3: { text: 'Меня зовут Siri', sender: 'bot' },
         },
     };
 
@@ -40,7 +38,7 @@ export default class Layout extends React.Component {
     };
 
     sendMessage = (message, sender) => {
-        const { messages, chats } = this.state;
+        const { messages } = this.state;
         const { chatId } = this.props;
         const messageId = Object.keys(messages).length + 1;
 
@@ -48,34 +46,18 @@ export default class Layout extends React.Component {
             messages: { ...messages, 
                         [messageId]: { text: message, sender: sender } 
             },
-            chats: { ...chats, 
-                    [chatId]: { ...chats[chatId],
-                                messageList: [ ...chats[chatId]['messageList'], messageId ] 
-                    }
-            },
         });
-    };
-
-    addChat = (title) => {
-        const { chats } = this.state;
-        const chatId = Object.keys(chats).length + 1;
-
-        this.setState({
-            chats: { ...chats, [chatId]: { title: title, messageList: []}},
-        })
+        // Вызываем Action-метод Redux
+        this.props.sendMessage(messageId, message, sender, chatId);
     };
 
     render() {
         return (
             <>
                 <Header chatId={ this.props.chatId }/>
-                <Chatlist 
-                    chats={ this.state.chats } 
-                    addChat={ this.addChat }
-                />
+                <Chatlist />
                 <MessageField 
                     chatId={ this.props.chatId }
-                    chats={ this.state.chats }
                     messages={ this.state.messages }
                     sendMessage={ this.sendMessage }
                 />
@@ -83,3 +65,9 @@ export default class Layout extends React.Component {
         );
     }
 }
+
+const mapStateToProps  = ({}) => ({});
+
+const mapDispatchToProps  = dispatch => bindActionCreators({ sendMessage }, dispatch);
+
+export default connect(mapStateToProps , mapDispatchToProps)(Layout);

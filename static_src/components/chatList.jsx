@@ -25,12 +25,13 @@ class ChatList extends React.Component {
 
     handleKeyUp = (event) => {
         if (event.keyCode === 13) { //Enter
-            this.addChat();
+            this.handleAddChat();
         }
     };
 
-    addChat = () => {
+    handleAddChat = () => {
         if (this.state.input.length > 0) {
+            // Вызываем Action-метод Redux
             this.props.addChat(this.state.input);
             this.setState({ input: ''});
         }
@@ -53,7 +54,7 @@ class ChatList extends React.Component {
                 <ListItem 
                     key="Add new chat"
                     leftIcon={ <AddIcon />}
-                    onClick={ this.AddChat }
+                    onClick={ this.handleAddChat }
                     style={ { height: '60px' } }
                     children= {<TextField
                         key="textField"
@@ -70,10 +71,25 @@ class ChatList extends React.Component {
     }
 }
 
-const mapStateToProps = ({ chatReducer }) => ({
+// Направление движения данных: из Redux =>>> React
+// Отображаем Redux Store в props класса-компонента React.
+// Reducer-ы разбивают Redux Store на логические части: чаты, чат-листы, профиль. 
+// По сути задаём правило: чем заполнять props react-компонента.
+// Вынимаем данные из определённого Reducer-а, и кладём в соответствующий prop класса-компонента React.
+// Переменная chats из chatReducer попадают в props компонента.
+// Я бы дал название mapStoreToProps
+const mapStateToProps  = ({ chatReducer }) => ({
     chats: chatReducer.chats,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+// Направление движения данных: из React =>>> Redux
+// Если нужно изменить данные, вызываем Action. 
+// Это структуры, которые передают данные из приложения в 
+// хранилище через специальный API Redux’а — dispatch().
+// функция addChat, импортированная из chatActions, попадают в props компонента.
+// Я бы дал название passActionThroughDispatch
+const mapDispatchToProps  = dispatch => bindActionCreators({ addChat }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
+// Декоратор - обёртка на класс ChatList, для подключения к API Redux.
+// Собираем вместе подготовленные раннее части инфрастуктуры Redux и React в единый механизм, готовый для запуска.
+export default connect(mapStateToProps , mapDispatchToProps)(ChatList);

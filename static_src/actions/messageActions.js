@@ -1,4 +1,4 @@
-export const SEND_MESSAGE = '@@chat/ADD_CHAT';
+export const SEND_MESSAGE = '@@chat/SEND_MESSAGE';
 
 export const sendMessage = (messageId, text, sender, chatId) => ({
     type: SEND_MESSAGE,

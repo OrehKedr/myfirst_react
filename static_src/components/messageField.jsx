@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
 import Message from './message';
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 
-export default class MessageField extends React.Component {
+
+class MessageField extends React.Component {
     static propTypes = {
         chatId: PropTypes.number.isRequired,
         messages: PropTypes.object.isRequired,
@@ -79,3 +82,12 @@ export default class MessageField extends React.Component {
         );
     }
 }
+
+const mapStateToProps = ({ chatReducer }) => ({
+    chats: chatReducer.chats,
+ });
+ 
+ const mapDispatchToProps  = dispatch => bindActionCreators({}, dispatch);
+ 
+ export default connect(mapStateToProps , mapDispatchToProps)(MessageField);
+ 
