@@ -8,9 +8,10 @@ export default store => next => (action) => {
                     Object.keys( store.getState().messageReducer.messages ).length + 1,
                     'Не приставай ко мне, я робот!', 
                     'bot', 
-                    action.chatId ) 
+                    action.chatId,
+                    'blink')
                 ), 1000);
-            }
+            };
     }
     return next(action);
 }

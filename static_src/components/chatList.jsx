@@ -50,6 +50,7 @@ class ChatList extends React.Component {
                 primaryText={ chats[chatId].title }
                 leftIcon={ <ContentSend /> }
                 onClick={ () => this.handleNavigate(`/chat/${chatId}`) }
+                className= { chats[chatId].css }
             /> ));
 
         return (

@@ -28,7 +28,7 @@ class MessageField extends React.Component {
             const messageId = Object.keys(messages).length + 1;
 
             // Вызываем Action-метод Redux
-            this.props.sendMessage(messageId, message, sender, chatId);
+            this.props.sendMessage(messageId, message, sender, chatId, '');
         }
 
         if (sender === 'me') {
