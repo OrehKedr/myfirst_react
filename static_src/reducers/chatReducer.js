@@ -4,9 +4,9 @@ import { ADD_CHAT } from "../actions/chatActions";
 
 const initialStore = {
    chats: {
-           1: {title: 'Чат 1', messageList: [1]},
-           2: {title: 'Чат 2', messageList: [2]},
-           3: {title: 'Чат 3', messageList: []},
+           1: {title: 'Чат 1', messageList: [1], css: ''},
+           2: {title: 'Чат 2', messageList: [2], css: ''},
+           3: {title: 'Чат 3', messageList: [], css: ''},
        },
 };
 
@@ -17,7 +17,8 @@ export default function chatReducer(store = initialStore, action) {
            return update(store, {
                chats: { $merge: { [action.chatId]: {
                    title: store.chats[action.chatId].title,
-                   messageList: [...store.chats[action.chatId].messageList, action.messageId]
+                   messageList: [...store.chats[action.chatId].messageList, action.messageId],
+                   css: action.css
                } } },
            });
        }
@@ -26,7 +27,7 @@ export default function chatReducer(store = initialStore, action) {
            return update(store, {
               chats: { $merge: {
                   [chatId]: {
-                      title: action.title, messageList: []
+                      title: action.title, messageList: [], css: ''
               } } },
            });
        }

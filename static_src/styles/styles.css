@@ -52,3 +52,20 @@
     color: gray;
     font-size: 14px;
  }
+
+ @keyframes blinkAnimation{
+   0%{
+       background: #ffffff;
+       }
+   50%{
+       background: #85eaf3db;
+       }
+   100%{
+       transform: rotate(xx);
+       background: #ffffff;
+       }
+}
+
+.blink{
+   animation: blinkAnimation 1.6s 1 0s ease-in-out;
+}

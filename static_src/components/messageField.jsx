@@ -28,7 +28,7 @@ class MessageField extends React.Component {
             const messageId = Object.keys(messages).length + 1;
 
             // Вызываем Action-метод Redux
-            this.props.sendMessage(messageId, message, sender, chatId);
+            this.props.sendMessage(messageId, message, sender, chatId, '');
         }
 
         if (sender === 'me') {
@@ -49,17 +49,6 @@ class MessageField extends React.Component {
     // Ставим фокус на <input> при монтировании компонента
     componentDidMount() {
         this.textInput.current.focus();
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        const { messages } = this.props;
-
-        if (Object.values(messages)[Object.values(messages).length - 1].sender === 'me') {
-            setTimeout( 
-                () => this.sendMessage('Не приставай ко мне, я робот!', 'bot'),
-                1000 
-            );
-        }
     };
 
     render() {

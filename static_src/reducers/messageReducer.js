@@ -11,10 +11,8 @@ const initialStore = {
 export default function messageReducer(store = initialStore, action) {
     switch (action.type) {
         case SEND_MESSAGE: {
-            const messageId = Object.keys(store.messages).length + 1;
-
             return update(store, {
-                messages: { $merge: { [messageId]: { text: action.text, sender: action.sender } } },
+                messages: { $merge: { [action.messageId]: { text: action.text, sender: action.sender } } },
             });
         }
         default:
