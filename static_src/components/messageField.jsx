@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
 import Message from './message';
-import { bindActionCreators } from "redux";
-import connect from "react-redux/es/connect/connect";
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
 import CircularProgress from 'material-ui/CircularProgress';
-import { sendMessage, loadMessages } from "../actions/messageActions";
+import { sendMessage } from '../actions/messageActions';
+import { loadChats } from '../actions/chatActions'
 
 class MessageField extends React.Component {
     static propTypes = {
@@ -15,7 +16,7 @@ class MessageField extends React.Component {
         chats: PropTypes.object.isRequired,
         sendMessage: PropTypes.func.isRequired,
         isLoading: PropTypes.bool.isRequired,
-        loadMessages: PropTypes.func.isRequired,
+        loadChats: PropTypes.func.isRequired,
     };
 
     state = {
@@ -49,13 +50,8 @@ class MessageField extends React.Component {
         }
     };
 
-    // Ставим фокус на <input> при монтировании компонента
     componentDidMount() {
-        this.textInput.current.focus();
-    //    fetch('/api/messages.json')
-    //    .then(body => body.json())
-    //    .then(json => console.log(json));
-        this.props.loadMessages();
+        this.props.loadChats();
     };
 
     render() {
@@ -101,10 +97,10 @@ class MessageField extends React.Component {
 const mapStateToProps = ({ chatReducer, messageReducer }) => ({
     chats: chatReducer.chats,
     messages: messageReducer.messages,
-    isLoading: messageReducer.isLoading,
+    isLoading: chatReducer.isLoading,
  });
  
- const mapDispatchToProps  = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
+ const mapDispatchToProps  = dispatch => bindActionCreators({ sendMessage, loadChats }, dispatch);
  
  export default connect(mapStateToProps , mapDispatchToProps)(MessageField);
  
