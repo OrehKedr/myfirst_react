@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import CircularProgress from 'material-ui/CircularProgress';
 import { sendMessage } from '../actions/messageActions';
-import { loadChats } from '../actions/chatActions'
+import { loadChats } from '../actions/chatActions';
 
 class MessageField extends React.Component {
     static propTypes = {

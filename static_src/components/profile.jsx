@@ -1,17 +1,42 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import CircularProgress from 'material-ui/CircularProgress';
+import { loadProfile } from '../actions/profileActions';
 
-export default function Profile() {
-    return (
-        <div>
-            <h2>Сергей Иванов</h2>
-            <p><strong>Обо мне: </strong> Веб-дизайнер. </p>
-            <p><strong>Хобби: </strong> Книги, природа, активный отдых, сайтостроение, дизайн, верстка </p>
-            <p><strong>Знания: </strong>
-            <span>HTML5, </span>
-            <span>CSS3, </span>
-            <span>jQuery, </span>
-            <span>React + Redux</span>
-            </p>
-        </div>
-    );
+class Profile extends React.Component {
+    static propTypes = {
+        profile: PropTypes.object.isRequired,
+        isLoadingProfile: PropTypes.bool.isRequired,
+        loadProfile: PropTypes.func.isRequired,
+    };
+
+    componentDidMount() {
+        this.props.loadProfile();
+    };
+
+    render() {
+        if (this.props.isLoadingProfile) {
+            return <CircularProgress />
+        };
+
+        const { name, email } = this.props.profile;
+ 
+        return (
+            <div>
+                <h2>{ name }</h2>
+                <p><strong>Email: </strong> { email } </p>
+            </div>
+        );
+    }
 }
+
+const mapStateToProps = ({ profileReducer }) => ({
+    profile: profileReducer.profile,
+    isLoadingProfile: profileReducer.isLoadingProfile,
+ });
+ 
+ const mapDispatchToProps  = dispatch => bindActionCreators({ loadProfile }, dispatch);
+ 
+ export default connect(mapStateToProps , mapDispatchToProps)(Profile);
