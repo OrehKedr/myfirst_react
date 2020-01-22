@@ -2,12 +2,15 @@ import update from 'react-addons-update';
 import { SEND_MESSAGE } from '../actions/messageActions';
 import { ADD_CHAT } from "../actions/chatActions";
 
+import {
+    START_CHATS_LOADING,
+    SUCCESS_CHATS_LOADING,
+    ERROR_CHATS_LOADING,
+ } from '../actions/chatActions';
+
 const initialStore = {
-   chats: {
-           1: {title: 'Чат 1', messageList: [1], css: ''},
-           2: {title: 'Чат 2', messageList: [2], css: ''},
-           3: {title: 'Чат 3', messageList: [], css: ''},
-       },
+   chats: { },
+   isLoading: true,
 };
 
 
@@ -22,6 +25,26 @@ export default function chatReducer(store = initialStore, action) {
                } } },
            });
        }
+
+       case START_CHATS_LOADING: {
+            return update(store, {
+                isLoading: { $set: true },
+            });
+       }
+
+       case SUCCESS_CHATS_LOADING: {
+            return update(store, {
+                chats: { $set: action.payload.entities.chats },
+                isLoading: { $set: false },
+            });
+       }
+
+       case ERROR_CHATS_LOADING: {
+            return update(store, {
+                isLoading: { $set: false },
+            });
+       }
+
        case ADD_CHAT: {
            const chatId = Object.keys(store.chats).length + 1;
            return update(store, {
@@ -31,6 +54,7 @@ export default function chatReducer(store = initialStore, action) {
               } } },
            });
        }
+
        default:
            return store;
    }

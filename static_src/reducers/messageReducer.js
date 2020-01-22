@@ -1,11 +1,10 @@
 import update from 'react-addons-update';
 import { SEND_MESSAGE } from '../actions/messageActions';
+import { SUCCESS_CHATS_LOADING } from '../actions/chatActions';
+ 
 
 const initialStore = {
-    messages: {
-        1: { text: 'Привет!', sender: 'bot' },
-        2: { text: 'Здравствуйте! ', sender: 'bot' },
-    },
+    messages: { },
 };
 
 export default function messageReducer(store = initialStore, action) {
@@ -15,6 +14,13 @@ export default function messageReducer(store = initialStore, action) {
                 messages: { $merge: { [action.messageId]: { text: action.text, sender: action.sender } } },
             });
         }
+        
+        case SUCCESS_CHATS_LOADING: {
+            return update(store, {
+                messages: { $set: action.payload.entities.messages },
+            });
+        }
+        
         default:
             return store;
     }

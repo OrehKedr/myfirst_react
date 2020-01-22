@@ -1,0 +1,15 @@
+{
+    "id": 1,
+    "name": "Сергей Иванов",
+    "email": "persona@gmail.com",
+    "skillsList": [
+        {
+            "id": 1,
+            "text": "React"
+        },
+        {
+            "id": 2,
+            "text": "Redux"
+        }
+    ]
+}
