@@ -27,6 +27,16 @@
         } else {
             console.log('ServiceWorker не поддерживается');
         }
-     </script>     
+    </script>
+    <script>
+        // Отслеживание установок
+        window.addEventListener('appinstalled', (evt) => {
+            fetch('/analytics/install', {
+                method: 'GET',
+                credentials: 'include',
+            });
+        });
+    </script>
+    <script src="./notifications.js"></script>
 </body>
 </html>
