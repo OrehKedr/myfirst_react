@@ -5,8 +5,8 @@ import Header from './header';
 import Chatlist from './chatList';
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import { sendMessage } from "../actions/messageActions";
-import '../styles/styles.css';
+import InstallPopup from './InstallPopup';
+import '../styles/layout.css';
 
 class Layout extends React.Component {
     static propTypes = {
@@ -20,13 +20,18 @@ class Layout extends React.Component {
 
     render() {
         return (
-            <>
+            <div key='layout' className='layout'>
+                <InstallPopup />
                 <Header chatId={ this.props.chatId }/>
-                <Chatlist />
-                <MessageField 
-                    chatId={ this.props.chatId }
-                />
-            </>
+                <div className="layout-canvas">
+                    <div className="layout-left-side">
+                        <Chatlist />
+                    </div>
+                    <div className="layout-right-side">
+                        <MessageField chatId={ this.props.chatId } />
+                    </div>
+                </div>
+            </div>
         );
     }
 }

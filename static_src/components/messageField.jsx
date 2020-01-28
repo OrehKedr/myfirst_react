@@ -8,6 +8,7 @@ import connect from 'react-redux/es/connect/connect';
 import CircularProgress from 'material-ui/CircularProgress';
 import { sendMessage } from '../actions/messageActions';
 import { loadChats } from '../actions/chatActions';
+import '../styles/styles.css';
 
 class MessageField extends React.Component {
     static propTypes = {
@@ -69,11 +70,11 @@ class MessageField extends React.Component {
             />));
  
         return (
-            <div className = "message-field-layout">
+            <>
                 <div key='messageElements' className = 'message-field'>
                     { messageElements }
                 </div>
-                <div key='textInput' style={ { width: '100%', display: 'flex', padding: '10px 20px' } }>
+                <div key='textInput' style={ { width: '100%', display: 'flex' } }>
                     <TextField
                         ref={ this.textInput }
                         name="input"
@@ -88,8 +89,7 @@ class MessageField extends React.Component {
                         <SendIcon />
                     </FloatingActionButton>
                 </div>
-
-            </div>
+            </>
         );
     }
 }
