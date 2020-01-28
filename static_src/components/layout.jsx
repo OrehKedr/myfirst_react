@@ -5,6 +5,7 @@ import Header from './header';
 import Chatlist from './chatList';
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
+import InstallPopup from './InstallPopup';
 import '../styles/layout.css';
 
 class Layout extends React.Component {
@@ -20,6 +21,7 @@ class Layout extends React.Component {
     render() {
         return (
             <div key='layout' className='layout'>
+                <InstallPopup />
                 <Header chatId={ this.props.chatId }/>
                 <div className="layout-canvas">
                     <div className="layout-left-side">
